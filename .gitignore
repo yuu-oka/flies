@@ -1,0 +1,7 @@
+.godot/
+*.translation
+export.cfg
+
+# Claude Code / Godot MCP dev tooling (local only, not shipped)
+addons/godot_mcp/
+.claude/settings.local.json
