@@ -35,6 +35,13 @@ const CHARACTERS := [
 	},
 ]
 
+const FLY_CHARACTERS := [
+	{
+		"normal": preload("res://assets/npc/fly_normal.svg"),
+		"selfie": preload("res://assets/npc/fly_normal.svg"),
+	},
+]
+
 var target: Node2D = null
 var is_influencer := false
 
@@ -50,7 +57,8 @@ var _speed := SPEED
 
 func _ready() -> void:
 	add_to_group("npc")
-	_character = CHARACTERS.pick_random()
+	var pool := FLY_CHARACTERS if GameState.hidden_mode else CHARACTERS
+	_character = pool.pick_random()
 	$Visual.texture = _character["normal"]
 	_speed = SPEED * randf_range(MIN_SPEED_FACTOR, MAX_SPEED_FACTOR)
 	is_influencer = randf() < INFLUENCER_CHANCE

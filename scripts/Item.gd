@@ -21,6 +21,14 @@ const ICONS := [
 	preload("res://assets/icons/shaved_ice.svg"),
 	preload("res://assets/icons/smoothie.svg"),
 ]
+const HIDDEN_ICONS := [
+	preload("res://assets/icons/hidden/trash_bag.svg"),
+	preload("res://assets/icons/hidden/empty_can.svg"),
+	preload("res://assets/icons/hidden/fish_bone.svg"),
+	preload("res://assets/icons/hidden/moldy_bread.svg"),
+	preload("res://assets/icons/hidden/mosaic_blob_1.svg"),
+	preload("res://assets/icons/hidden/mosaic_blob_2.svg"),
+]
 
 var _player_nearby := false
 var _qualifying_npcs := {}
@@ -28,7 +36,8 @@ var _qualifying_npcs := {}
 
 func _ready() -> void:
 	add_to_group("item")
-	$Visual.texture = ICONS.pick_random()
+	var pool := HIDDEN_ICONS if GameState.hidden_mode else ICONS
+	$Visual.texture = pool.pick_random()
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	get_tree().create_timer(randf_range(MIN_LIFETIME, MAX_LIFETIME)).timeout.connect(queue_free)

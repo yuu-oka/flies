@@ -15,6 +15,8 @@ var _time_remaining := TIME_LIMIT
 
 
 func _ready() -> void:
+	_apply_hidden_background()
+
 	var item_timer := Timer.new()
 	item_timer.wait_time = SPAWN_INTERVAL
 	item_timer.autostart = true
@@ -34,6 +36,17 @@ func _ready() -> void:
 	add_child(countdown_timer)
 
 	_update_timer_label()
+
+
+func _apply_hidden_background() -> void:
+	if not GameState.hidden_mode:
+		return
+	var gradient := Gradient.new()
+	gradient.colors = PackedColorArray([Color(0.302, 0.329, 0.106), Color(0.145, 0.114, 0.055)])
+	var texture := GradientTexture2D.new()
+	texture.gradient = gradient
+	texture.fill_to = Vector2(0, 1)
+	$Background.texture = texture
 
 
 func _spawn_item() -> void:

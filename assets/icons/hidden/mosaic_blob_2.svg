@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <ellipse cx="64" cy="82" rx="34" ry="24" fill="#6b5a2e"/>
+  <ellipse cx="50" cy="58" rx="16" ry="13" fill="#7d6a38"/>
+  <g opacity="0.5">
+    <rect x="30" y="58" width="11" height="11" fill="#e6e6e6"/>
+    <rect x="52" y="58" width="11" height="11" fill="#9c9c9c"/>
+    <rect x="74" y="58" width="11" height="11" fill="#e6e6e6"/>
+    <rect x="96" y="58" width="11" height="11" fill="#9c9c9c"/>
+    <rect x="41" y="69" width="11" height="11" fill="#9c9c9c"/>
+    <rect x="63" y="69" width="11" height="11" fill="#e6e6e6"/>
+    <rect x="85" y="69" width="11" height="11" fill="#9c9c9c"/>
+    <rect x="30" y="80" width="11" height="11" fill="#e6e6e6"/>
+    <rect x="52" y="80" width="11" height="11" fill="#9c9c9c"/>
+    <rect x="74" y="80" width="11" height="11" fill="#e6e6e6"/>
+    <rect x="96" y="80" width="11" height="11" fill="#9c9c9c"/>
+    <rect x="41" y="91" width="11" height="11" fill="#9c9c9c"/>
+    <rect x="63" y="91" width="11" height="11" fill="#e6e6e6"/>
+    <rect x="85" y="91" width="11" height="11" fill="#9c9c9c"/>
+  </g>
+  <g stroke="#8bab6d" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85">
+    <path d="M52 24 Q56 18 52 12"/>
+    <path d="M64 20 Q68 14 64 8"/>
+  </g>
+</svg>
