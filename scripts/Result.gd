@@ -2,7 +2,8 @@ extends Node2D
 
 
 func _ready() -> void:
-	$CenterContainer/VBoxContainer/SubtitleLabel.text = "獲得いいね数: %d" % int(GameState.last_score)
+	var label := "獲得たかりポイント数" if GameState.hidden_mode else "獲得いいね数"
+	$CenterContainer/VBoxContainer/SubtitleLabel.text = "%s: %d" % [label, int(GameState.last_score)]
 	if GameState.hidden_mode:
 		_apply_hidden_background()
 		var color := Color(0.82, 0.85, 0.55, 1)

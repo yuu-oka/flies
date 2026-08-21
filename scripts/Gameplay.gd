@@ -19,11 +19,21 @@ const FINALE_TIME_THRESHOLD := 15
 const FINALE_SPAWN_SPEED_MULTIPLIER := 1.5
 const FINALE_MIN_NPC_BURST := 3
 const FINALE_MAX_NPC_BURST := 10
+const FINALE_ITEM_SPAWN_MULTIPLIER := 1.5
+const FINALE_MIN_ITEM_BURST := 2
+const FINALE_MAX_ITEM_BURST := 3
+const FINALE_TIMER_COLOR_A := Color(1.0, 0.15, 0.15, 1)
+const FINALE_TIMER_COLOR_B := Color(1.0, 0.65, 0.0, 1)
+const FINALE_TIMER_PULSE_SPEED := 6.0
+
+var _bgm_normal := preload("res://assets/audio/bgm_normal.wav")
+var _bgm_hidden := preload("res://assets/audio/bgm_hidden.wav")
 
 var score := 0.0
 var _time_remaining := TIME_LIMIT
 var _heart_accumulator := 0.0
 var _finale_active := false
+var _finale_pulse_age := 0.0
 
 
 func _ready() -> void:
@@ -35,7 +45,17 @@ func _ready() -> void:
 	like_sound_player.bus = GameState.SFX_BUS_NAME
 	add_child(like_sound_player)
 
+	_bgm_normal.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	_bgm_hidden.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	var bgm_player := AudioStreamPlayer.new()
+	bgm_player.name = "BgmPlayer"
+	bgm_player.stream = _bgm_hidden if GameState.hidden_mode else _bgm_normal
+	bgm_player.bus = GameState.BGM_BUS_NAME
+	add_child(bgm_player)
+	bgm_player.play()
+
 	var item_timer := Timer.new()
+	item_timer.name = "ItemTimer"
 	item_timer.wait_time = SPAWN_INTERVAL
 	item_timer.autostart = true
 	item_timer.timeout.connect(_spawn_item)
@@ -54,7 +74,16 @@ func _ready() -> void:
 	countdown_timer.timeout.connect(_on_countdown_tick)
 	add_child(countdown_timer)
 
+	_update_score_label()
 	_update_timer_label()
+
+
+func _process(delta: float) -> void:
+	if not _finale_active:
+		return
+	_finale_pulse_age += delta
+	var t := (sin(_finale_pulse_age * FINALE_TIMER_PULSE_SPEED) + 1.0) / 2.0
+	$TimerLabel.add_theme_color_override("font_color", FINALE_TIMER_COLOR_A.lerp(FINALE_TIMER_COLOR_B, t))
 
 
 func _apply_hidden_background() -> void:
@@ -69,10 +98,12 @@ func _apply_hidden_background() -> void:
 
 
 func _spawn_item() -> void:
-	var item := ItemScene.instantiate()
-	item.position = _find_item_spawn_position()
-	item.points_earned.connect(_on_points_earned)
-	add_child(item)
+	var count := randi_range(FINALE_MIN_ITEM_BURST, FINALE_MAX_ITEM_BURST) if _finale_active else 1
+	for i in count:
+		var item := ItemScene.instantiate()
+		item.position = _find_item_spawn_position()
+		item.points_earned.connect(_on_points_earned)
+		add_child(item)
 
 
 func _find_item_spawn_position() -> Vector2:
@@ -118,7 +149,7 @@ func _random_offscreen_position() -> Vector2:
 
 func _on_points_earned(amount: float) -> void:
 	score += amount
-	$ScoreLabel.text = "スコア: %d" % int(score)
+	_update_score_label()
 	_heart_accumulator += amount
 	while _heart_accumulator >= HEART_POINT_THRESHOLD:
 		_heart_accumulator -= HEART_POINT_THRESHOLD
@@ -126,6 +157,7 @@ func _on_points_earned(amount: float) -> void:
 
 
 func _spawn_heart() -> void:
+	$LikeSoundPlayer.play()
 	if get_tree().get_nodes_in_group("heart").size() >= MAX_ACTIVE_HEARTS:
 		return
 	var heart := HeartScene.instantiate()
@@ -135,7 +167,6 @@ func _spawn_heart() -> void:
 		viewport_size.y - HEART_BOTTOM_MARGIN
 	)
 	add_child(heart)
-	$LikeSoundPlayer.play()
 
 
 func _on_countdown_tick() -> void:
@@ -150,6 +181,12 @@ func _on_countdown_tick() -> void:
 func _activate_finale() -> void:
 	_finale_active = true
 	$NpcTimer.wait_time = NPC_SPAWN_INTERVAL / FINALE_SPAWN_SPEED_MULTIPLIER
+	$ItemTimer.wait_time = SPAWN_INTERVAL / FINALE_ITEM_SPAWN_MULTIPLIER
+
+
+func _update_score_label() -> void:
+	var label := "たかりポイント" if GameState.hidden_mode else "スコア"
+	$ScoreLabel.text = "%s: %d" % [label, int(score)]
 
 
 func _update_timer_label() -> void:

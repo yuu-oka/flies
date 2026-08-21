@@ -15,6 +15,8 @@ const RANDOM_DESPAWN_MIN_DELAY := 5.0
 const RANDOM_DESPAWN_MAX_DELAY := 20.0
 const SELFIE_SPEED_FACTOR := 0.15
 const ARRIVAL_THRESHOLD := 4.0
+const MIN_ITEM_VISITS := 3
+const MAX_ITEM_VISITS := 5
 const InfluencerSound := preload("res://assets/audio/influencer_sparkle.wav")
 
 const CHARACTERS := [
@@ -54,6 +56,7 @@ var _despawn_point := Vector2.ZERO
 var _speed_multiplier := 1.0
 var _target_offset := Vector2.ZERO
 var _speed := SPEED
+var _visits_remaining := 0
 
 
 func _ready() -> void:
@@ -62,6 +65,7 @@ func _ready() -> void:
 	_character = pool.pick_random()
 	$Visual.texture = _character["normal"]
 	_speed = SPEED * randf_range(MIN_SPEED_FACTOR, MAX_SPEED_FACTOR)
+	_visits_remaining = randi_range(MIN_ITEM_VISITS, MAX_ITEM_VISITS)
 	is_influencer = randf() < INFLUENCER_CHANCE
 	if randf() < RANDOM_DESPAWN_CHANCE:
 		var delay := randf_range(RANDOM_DESPAWN_MIN_DELAY, RANDOM_DESPAWN_MAX_DELAY)
@@ -110,15 +114,25 @@ func _update_selfie_pose(near: bool) -> void:
 func pull_toward(item: Node2D) -> void:
 	if _glowing or _despawning:
 		return
+	if _visits_remaining <= 0:
+		return
+	_visits_remaining -= 1
 	target = item
 	_speed_multiplier = PULLED_SPEED_MULTIPLIER
 	_target_offset = _random_cluster_offset()
 
 
 func _pick_new_target() -> void:
-	_speed_multiplier = 1.0
 	var items := get_tree().get_nodes_in_group("item")
-	target = items.pick_random() if not items.is_empty() else null
+	if items.is_empty():
+		target = null
+		return
+	if _visits_remaining <= 0:
+		_start_despawn()
+		return
+	_visits_remaining -= 1
+	_speed_multiplier = 1.0
+	target = items.pick_random()
 	_target_offset = _random_cluster_offset()
 
 
