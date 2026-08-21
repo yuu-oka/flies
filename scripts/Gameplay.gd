@@ -15,10 +15,15 @@ const HEART_POINT_THRESHOLD := 1.5
 const MAX_ACTIVE_HEARTS := 16
 const HEART_SIDE_MARGIN := 50.0
 const HEART_BOTTOM_MARGIN := 24.0
+const FINALE_TIME_THRESHOLD := 15
+const FINALE_SPAWN_SPEED_MULTIPLIER := 1.5
+const FINALE_MIN_NPC_BURST := 3
+const FINALE_MAX_NPC_BURST := 10
 
 var score := 0.0
 var _time_remaining := TIME_LIMIT
 var _heart_accumulator := 0.0
+var _finale_active := false
 
 
 func _ready() -> void:
@@ -37,6 +42,7 @@ func _ready() -> void:
 	add_child(item_timer)
 
 	var npc_timer := Timer.new()
+	npc_timer.name = "NpcTimer"
 	npc_timer.wait_time = NPC_SPAWN_INTERVAL
 	npc_timer.autostart = true
 	npc_timer.timeout.connect(_spawn_npc)
@@ -90,9 +96,11 @@ func _far_enough_from_items(pos: Vector2) -> bool:
 
 
 func _spawn_npc() -> void:
-	var npc := NpcScene.instantiate()
-	npc.position = _random_offscreen_position()
-	add_child(npc)
+	var count := randi_range(FINALE_MIN_NPC_BURST, FINALE_MAX_NPC_BURST) if _finale_active else 1
+	for i in count:
+		var npc := NpcScene.instantiate()
+		npc.position = _random_offscreen_position()
+		add_child(npc)
 
 
 func _random_offscreen_position() -> Vector2:
@@ -133,8 +141,15 @@ func _spawn_heart() -> void:
 func _on_countdown_tick() -> void:
 	_time_remaining -= 1
 	_update_timer_label()
+	if not _finale_active and _time_remaining <= FINALE_TIME_THRESHOLD:
+		_activate_finale()
 	if _time_remaining <= 0:
 		_end_game()
+
+
+func _activate_finale() -> void:
+	_finale_active = true
+	$NpcTimer.wait_time = NPC_SPAWN_INTERVAL / FINALE_SPAWN_SPEED_MULTIPLIER
 
 
 func _update_timer_label() -> void:
