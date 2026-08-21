@@ -16,6 +16,14 @@ const HIDDEN_ICONS := {
 	"Content/Row4/Icon": preload("res://assets/npc/fly_normal.svg"),
 }
 
+const HIDDEN_TEXT_COLOR_PATHS := [
+	"Content/Row1/Label",
+	"Content/Row2/Label",
+	"Content/Row3/Label",
+	"Content/Row4/Label",
+	"Content/StartLabel",
+]
+
 
 func _ready() -> void:
 	if not GameState.hidden_mode:
@@ -24,6 +32,18 @@ func _ready() -> void:
 		get_node(path).text = HIDDEN_TEXTS[path]
 	for path in HIDDEN_ICONS:
 		get_node(path).texture = HIDDEN_ICONS[path]
+	for path in HIDDEN_TEXT_COLOR_PATHS:
+		get_node(path).add_theme_color_override("font_color", Color(0.82, 0.85, 0.55, 1))
+	_apply_hidden_background()
+
+
+func _apply_hidden_background() -> void:
+	var gradient := Gradient.new()
+	gradient.colors = PackedColorArray([Color(0.302, 0.329, 0.106), Color(0.145, 0.114, 0.055)])
+	var texture := GradientTexture2D.new()
+	texture.gradient = gradient
+	texture.fill_to = Vector2(0, 1)
+	$Background.texture = texture
 
 
 func _unhandled_input(event: InputEvent) -> void:
