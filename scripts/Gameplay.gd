@@ -27,6 +27,7 @@ func _ready() -> void:
 	var like_sound_player := AudioStreamPlayer.new()
 	like_sound_player.name = "LikeSoundPlayer"
 	like_sound_player.stream = LikeSound
+	like_sound_player.bus = GameState.SFX_BUS_NAME
 	add_child(like_sound_player)
 
 	var item_timer := Timer.new()

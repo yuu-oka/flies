@@ -21,6 +21,7 @@ func _ready() -> void:
 		_fly_buzz_sound.loop_mode = AudioStreamWAV.LOOP_FORWARD
 		_buzz_player = AudioStreamPlayer.new()
 		_buzz_player.stream = _fly_buzz_sound
+		_buzz_player.bus = GameState.SFX_BUS_NAME
 		add_child(_buzz_player)
 	$TargetMarker.visible = false
 

@@ -77,3 +77,13 @@ theme_override_colors/font_color = Color(0.357, 0.294, 0.416, 1)
 theme_override_font_sizes/font_size = 24
 text = "スペースキーまたはクリックでスタート"
 horizontal_alignment = 1
+
+[node name="SettingsButton" type="Button" parent="."]
+offset_left = 1012.0
+offset_top = 588.0
+offset_right = 1132.0
+offset_bottom = 628.0
+theme_override_font_sizes/font_size = 18
+text = "⚙ 設定"
+
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_pressed"]

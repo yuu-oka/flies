@@ -30,6 +30,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_tree().change_scene_to_file("res://scenes/Description.tscn")
 
 
+func _on_settings_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/Settings.tscn")
+
+
 func _update_title_text() -> void:
 	$CenterContainer/VBoxContainer/TitleLabel.text = "バエが集る" if GameState.hidden_mode else "映え映えQ"
 

@@ -138,6 +138,7 @@ func _start_glowing() -> void:
 func _play_influencer_sound() -> void:
 	var sound_player := AudioStreamPlayer.new()
 	sound_player.stream = InfluencerSound
+	sound_player.bus = GameState.SFX_BUS_NAME
 	add_child(sound_player)
 	sound_player.play()
 
