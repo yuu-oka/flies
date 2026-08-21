@@ -15,6 +15,7 @@ const RANDOM_DESPAWN_MIN_DELAY := 5.0
 const RANDOM_DESPAWN_MAX_DELAY := 20.0
 const SELFIE_SPEED_FACTOR := 0.15
 const ARRIVAL_THRESHOLD := 4.0
+const InfluencerSound := preload("res://assets/audio/influencer_sparkle.wav")
 
 const CHARACTERS := [
 	{
@@ -130,7 +131,15 @@ func _random_cluster_offset() -> Vector2:
 func _start_glowing() -> void:
 	_glowing = true
 	$Visual.modulate = GLOW_COLOR
+	_play_influencer_sound()
 	_pull_other_npcs()
+
+
+func _play_influencer_sound() -> void:
+	var sound_player := AudioStreamPlayer.new()
+	sound_player.stream = InfluencerSound
+	add_child(sound_player)
+	sound_player.play()
 
 
 func _pull_other_npcs() -> void:

@@ -3,6 +3,7 @@ extends Node2D
 const ItemScene := preload("res://scenes/Item.tscn")
 const NpcScene := preload("res://scenes/Npc.tscn")
 const HeartScene := preload("res://scenes/Heart.tscn")
+const LikeSound := preload("res://assets/audio/like_chime.wav")
 const SPAWN_INTERVAL := 1.5
 const NPC_SPAWN_INTERVAL := 1.0
 const SCREEN_MARGIN := 60.0
@@ -22,6 +23,11 @@ var _heart_accumulator := 0.0
 
 func _ready() -> void:
 	_apply_hidden_background()
+
+	var like_sound_player := AudioStreamPlayer.new()
+	like_sound_player.name = "LikeSoundPlayer"
+	like_sound_player.stream = LikeSound
+	add_child(like_sound_player)
 
 	var item_timer := Timer.new()
 	item_timer.wait_time = SPAWN_INTERVAL
@@ -120,6 +126,7 @@ func _spawn_heart() -> void:
 		viewport_size.y - HEART_BOTTOM_MARGIN
 	)
 	add_child(heart)
+	$LikeSoundPlayer.play()
 
 
 func _on_countdown_tick() -> void:

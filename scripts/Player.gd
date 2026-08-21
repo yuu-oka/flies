@@ -6,15 +6,22 @@ const ARRIVE_THRESHOLD := 6.0
 const MARKER_PULSE_SPEED := 4.0
 const MARKER_PULSE_AMOUNT := 0.08
 
+var _fly_buzz_sound := preload("res://assets/audio/fly_buzz.wav")
+
 var _click_target := Vector2.ZERO
 var _has_click_target := false
 var _marker_pulse_age := 0.0
+var _buzz_player: AudioStreamPlayer
 
 
 func _ready() -> void:
 	add_to_group("player")
 	if GameState.hidden_mode:
 		$Sprite2D.texture = HIDDEN_TEXTURE
+		_fly_buzz_sound.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		_buzz_player = AudioStreamPlayer.new()
+		_buzz_player.stream = _fly_buzz_sound
+		add_child(_buzz_player)
 	$TargetMarker.visible = false
 
 
@@ -53,6 +60,17 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity = Vector2.ZERO
 	move_and_slide()
+	_update_buzz_sound()
+
+
+func _update_buzz_sound() -> void:
+	if _buzz_player == null:
+		return
+	if velocity != Vector2.ZERO:
+		if not _buzz_player.playing:
+			_buzz_player.play()
+	elif _buzz_player.playing:
+		_buzz_player.stop()
 
 
 func _clear_click_target() -> void:
