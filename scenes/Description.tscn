@@ -131,7 +131,7 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.976, 0.4, 0.573, 1)
 theme_override_font_sizes/font_size = 22
-text = "制限時間3分でどれだけ「いいね」を稼げるか挑戦しよう！"
+text = "制限時間1分でどれだけ「いいね」を稼げるか挑戦しよう！"
 horizontal_alignment = 1
 
 [node name="StartLabel" type="Label" parent="Content"]

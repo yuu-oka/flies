@@ -5,7 +5,7 @@ const HIDDEN_TEXTS := {
 	"Content/Row2/Label": "画面に現れるゴミに近づくと「たかりポイント」がもらえる（1秒ごとに+1）",
 	"Content/Row3/Label": "他のハエ（NPC）もゴミに集まってくる",
 	"Content/Row4/Label": "自分が先にいるゴミに、後から集まったハエの数だけボーナス！",
-	"Content/Row5": "制限時間3分でどれだけ「たかりポイント」を稼げるか挑戦しよう！",
+	"Content/Row5": "制限時間1分でどれだけ「たかりポイント」を稼げるか挑戦しよう！",
 }
 
 const HIDDEN_ICONS := {

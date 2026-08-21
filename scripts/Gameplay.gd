@@ -2,16 +2,22 @@ extends Node2D
 
 const ItemScene := preload("res://scenes/Item.tscn")
 const NpcScene := preload("res://scenes/Npc.tscn")
+const HeartScene := preload("res://scenes/Heart.tscn")
 const SPAWN_INTERVAL := 1.5
 const NPC_SPAWN_INTERVAL := 1.0
 const SCREEN_MARGIN := 60.0
 const OFFSCREEN_MARGIN := 40.0
 const MIN_ITEM_DISTANCE := 150.0
 const MAX_ITEM_SPAWN_ATTEMPTS := 20
-const TIME_LIMIT := 180
+const TIME_LIMIT := 60
+const HEART_POINT_THRESHOLD := 1.5
+const MAX_ACTIVE_HEARTS := 16
+const HEART_SIDE_MARGIN := 50.0
+const HEART_BOTTOM_MARGIN := 24.0
 
 var score := 0.0
 var _time_remaining := TIME_LIMIT
+var _heart_accumulator := 0.0
 
 
 func _ready() -> void:
@@ -98,6 +104,22 @@ func _random_offscreen_position() -> Vector2:
 func _on_points_earned(amount: float) -> void:
 	score += amount
 	$ScoreLabel.text = "スコア: %d" % int(score)
+	_heart_accumulator += amount
+	while _heart_accumulator >= HEART_POINT_THRESHOLD:
+		_heart_accumulator -= HEART_POINT_THRESHOLD
+		_spawn_heart()
+
+
+func _spawn_heart() -> void:
+	if get_tree().get_nodes_in_group("heart").size() >= MAX_ACTIVE_HEARTS:
+		return
+	var heart := HeartScene.instantiate()
+	var viewport_size := get_viewport_rect().size
+	heart.position = Vector2(
+		randf_range(HEART_SIDE_MARGIN, viewport_size.x - HEART_SIDE_MARGIN),
+		viewport_size.y - HEART_BOTTOM_MARGIN
+	)
+	add_child(heart)
 
 
 func _on_countdown_tick() -> void:

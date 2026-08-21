@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/Heart.gd" id="1_heart"]
+[ext_resource type="Texture2D" path="res://assets/effects/heart.svg" id="2_heart_tex"]
+
+[node name="Heart" type="Node2D"]
+script = ExtResource("1_heart")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_heart_tex")
