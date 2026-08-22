@@ -6,9 +6,15 @@ const HIDDEN_TEXT_COLOR := Color(0.82, 0.85, 0.55, 1)
 
 func _ready() -> void:
 	$CenterContainer/VBoxContainer/SfxRow/SfxToggle.button_pressed = GameState.sfx_enabled
-	_set_toggle_text(GameState.sfx_enabled)
+	_set_toggle_text($CenterContainer/VBoxContainer/SfxRow/SfxToggle, GameState.sfx_enabled)
 	$CenterContainer/VBoxContainer/VolumeRow/VolumeSlider.value = GameState.sfx_volume * 100.0
-	_set_volume_label(GameState.sfx_volume)
+	_set_volume_label($CenterContainer/VBoxContainer/VolumeRow/VolumeValueLabel, GameState.sfx_volume)
+
+	$CenterContainer/VBoxContainer/BgmRow/BgmToggle.button_pressed = GameState.bgm_enabled
+	_set_toggle_text($CenterContainer/VBoxContainer/BgmRow/BgmToggle, GameState.bgm_enabled)
+	$CenterContainer/VBoxContainer/BgmVolumeRow/BgmVolumeSlider.value = GameState.bgm_volume * 100.0
+	_set_volume_label($CenterContainer/VBoxContainer/BgmVolumeRow/BgmVolumeValueLabel, GameState.bgm_volume)
+
 	if GameState.hidden_mode:
 		_apply_hidden_background()
 		_apply_hidden_text_colors()
@@ -16,25 +22,36 @@ func _ready() -> void:
 
 func _on_sfx_toggled(pressed: bool) -> void:
 	GameState.set_sfx_enabled(pressed)
-	_set_toggle_text(pressed)
+	_set_toggle_text($CenterContainer/VBoxContainer/SfxRow/SfxToggle, pressed)
 
 
 func _on_volume_changed(value: float) -> void:
 	var volume := value / 100.0
 	GameState.set_sfx_volume(volume)
-	_set_volume_label(volume)
+	_set_volume_label($CenterContainer/VBoxContainer/VolumeRow/VolumeValueLabel, volume)
+
+
+func _on_bgm_toggled(pressed: bool) -> void:
+	GameState.set_bgm_enabled(pressed)
+	_set_toggle_text($CenterContainer/VBoxContainer/BgmRow/BgmToggle, pressed)
+
+
+func _on_bgm_volume_changed(value: float) -> void:
+	var volume := value / 100.0
+	GameState.set_bgm_volume(volume)
+	_set_volume_label($CenterContainer/VBoxContainer/BgmVolumeRow/BgmVolumeValueLabel, volume)
 
 
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Title.tscn")
 
 
-func _set_toggle_text(enabled: bool) -> void:
-	$CenterContainer/VBoxContainer/SfxRow/SfxToggle.text = "ON" if enabled else "OFF"
+func _set_toggle_text(toggle: CheckButton, enabled: bool) -> void:
+	toggle.text = "ON" if enabled else "OFF"
 
 
-func _set_volume_label(volume: float) -> void:
-	$CenterContainer/VBoxContainer/VolumeRow/VolumeValueLabel.text = "%d%%" % int(round(volume * 100.0))
+func _set_volume_label(label: Label, volume: float) -> void:
+	label.text = "%d%%" % int(round(volume * 100.0))
 
 
 func _apply_hidden_background() -> void:
@@ -50,3 +67,6 @@ func _apply_hidden_text_colors() -> void:
 	$CenterContainer/VBoxContainer/SfxRow/SfxLabel.add_theme_color_override("font_color", HIDDEN_TEXT_COLOR)
 	$CenterContainer/VBoxContainer/VolumeRow/VolumeLabel.add_theme_color_override("font_color", HIDDEN_TEXT_COLOR)
 	$CenterContainer/VBoxContainer/VolumeRow/VolumeValueLabel.add_theme_color_override("font_color", HIDDEN_TEXT_COLOR)
+	$CenterContainer/VBoxContainer/BgmRow/BgmLabel.add_theme_color_override("font_color", HIDDEN_TEXT_COLOR)
+	$CenterContainer/VBoxContainer/BgmVolumeRow/BgmVolumeLabel.add_theme_color_override("font_color", HIDDEN_TEXT_COLOR)
+	$CenterContainer/VBoxContainer/BgmVolumeRow/BgmVolumeValueLabel.add_theme_color_override("font_color", HIDDEN_TEXT_COLOR)
