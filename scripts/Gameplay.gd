@@ -26,9 +26,6 @@ const FINALE_TIMER_COLOR_A := Color(1.0, 0.15, 0.15, 1)
 const FINALE_TIMER_COLOR_B := Color(1.0, 0.65, 0.0, 1)
 const FINALE_TIMER_PULSE_SPEED := 6.0
 
-var _bgm_normal := preload("res://assets/audio/bgm_normal.wav")
-var _bgm_hidden := preload("res://assets/audio/bgm_hidden.wav")
-
 var score := 0.0
 var _time_remaining := TIME_LIMIT
 var _heart_accumulator := 0.0
@@ -44,15 +41,6 @@ func _ready() -> void:
 	like_sound_player.stream = LikeSound
 	like_sound_player.bus = GameState.SFX_BUS_NAME
 	add_child(like_sound_player)
-
-	_bgm_normal.loop_mode = AudioStreamWAV.LOOP_FORWARD
-	_bgm_hidden.loop_mode = AudioStreamWAV.LOOP_FORWARD
-	var bgm_player := AudioStreamPlayer.new()
-	bgm_player.name = "BgmPlayer"
-	bgm_player.stream = _bgm_hidden if GameState.hidden_mode else _bgm_normal
-	bgm_player.bus = GameState.BGM_BUS_NAME
-	add_child(bgm_player)
-	bgm_player.play()
 
 	var item_timer := Timer.new()
 	item_timer.name = "ItemTimer"
