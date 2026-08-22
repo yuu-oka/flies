@@ -45,8 +45,9 @@ func _ready() -> void:
 	like_sound_player.bus = GameState.SFX_BUS_NAME
 	add_child(like_sound_player)
 
-	var bgm_stream: AudioStreamWAV = load(BGM_HIDDEN_PATH if GameState.hidden_mode else BGM_NORMAL_PATH)
+	var bgm_stream: AudioStreamWAV = load(BGM_HIDDEN_PATH if GameState.hidden_mode else BGM_NORMAL_PATH).duplicate()
 	bgm_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	bgm_stream.loop_end = int(bgm_stream.get_length() * bgm_stream.mix_rate)
 	var bgm_player := AudioStreamPlayer.new()
 	bgm_player.name = "BgmPlayer"
 	bgm_player.stream = bgm_stream

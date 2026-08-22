@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://cjw4seweccb0a"]
 
-[ext_resource type="Script" path="res://scripts/Settings.gd" id="1_settings"]
+[ext_resource type="Script" uid="uid://daoq04ecukij6" path="res://scripts/Settings.gd" id="1_settings"]
 
 [sub_resource type="Gradient" id="Gradient_bg"]
 colors = PackedColorArray(0.976, 0.659, 0.831, 1, 0.769, 0.71, 0.992, 1)
@@ -9,124 +9,118 @@ colors = PackedColorArray(0.976, 0.659, 0.831, 1, 0.769, 0.71, 0.992, 1)
 gradient = SubResource("Gradient_bg")
 fill_to = Vector2(0, 1)
 
-[node name="Settings" type="Node2D"]
+[node name="Settings" type="Node2D" unique_id=518439384]
 script = ExtResource("1_settings")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1933600704]
 offset_right = 1152.0
 offset_bottom = 648.0
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_bg")
 expand_mode = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=211044619]
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1760927903]
 custom_minimum_size = Vector2(520, 0)
 layout_mode = 2
 theme_override_constants/separation = 28
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=2051859336]
 layout_mode = 2
-theme_override_colors/font_color = Color(1.0, 0.361, 0.541, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 0.361, 0.541, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.2)
-theme_override_constants/outline_size = 8
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 48
 text = "設定"
 horizontal_alignment = 1
 
-[node name="SfxRow" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="SfxRow" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=935652241]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="SfxLabel" type="Label" parent="CenterContainer/VBoxContainer/SfxRow"]
+[node name="SfxLabel" type="Label" parent="CenterContainer/VBoxContainer/SfxRow" unique_id=603843332]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.357, 0.294, 0.416, 1)
 theme_override_font_sizes/font_size = 26
 text = "効果音"
 
-[node name="SfxToggle" type="CheckButton" parent="CenterContainer/VBoxContainer/SfxRow"]
+[node name="SfxToggle" type="CheckButton" parent="CenterContainer/VBoxContainer/SfxRow" unique_id=1227131560]
 layout_mode = 2
 button_pressed = true
 text = "ON"
 
-[node name="VolumeRow" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="VolumeRow" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=1158696358]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="VolumeLabel" type="Label" parent="CenterContainer/VBoxContainer/VolumeRow"]
+[node name="VolumeLabel" type="Label" parent="CenterContainer/VBoxContainer/VolumeRow" unique_id=1560566587]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.357, 0.294, 0.416, 1)
 theme_override_font_sizes/font_size = 26
 text = "音量"
 
-[node name="VolumeSlider" type="HSlider" parent="CenterContainer/VBoxContainer/VolumeRow"]
+[node name="VolumeSlider" type="HSlider" parent="CenterContainer/VBoxContainer/VolumeRow" unique_id=2134237054]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 size_flags_vertical = 4
-min_value = 0.0
-max_value = 100.0
-step = 1.0
 value = 100.0
 
-[node name="VolumeValueLabel" type="Label" parent="CenterContainer/VBoxContainer/VolumeRow"]
+[node name="VolumeValueLabel" type="Label" parent="CenterContainer/VBoxContainer/VolumeRow" unique_id=410815621]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.357, 0.294, 0.416, 1)
 theme_override_font_sizes/font_size = 26
 text = "100%"
 
-[node name="BgmRow" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="BgmRow" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=578209687]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="BgmLabel" type="Label" parent="CenterContainer/VBoxContainer/BgmRow"]
+[node name="BgmLabel" type="Label" parent="CenterContainer/VBoxContainer/BgmRow" unique_id=2004570694]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.357, 0.294, 0.416, 1)
 theme_override_font_sizes/font_size = 26
 text = "BGM"
 
-[node name="BgmToggle" type="CheckButton" parent="CenterContainer/VBoxContainer/BgmRow"]
+[node name="BgmToggle" type="CheckButton" parent="CenterContainer/VBoxContainer/BgmRow" unique_id=1769487864]
 layout_mode = 2
 button_pressed = true
 text = "ON"
 
-[node name="BgmVolumeRow" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="BgmVolumeRow" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=199119570]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="BgmVolumeLabel" type="Label" parent="CenterContainer/VBoxContainer/BgmVolumeRow"]
+[node name="BgmVolumeLabel" type="Label" parent="CenterContainer/VBoxContainer/BgmVolumeRow" unique_id=1038537445]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.357, 0.294, 0.416, 1)
 theme_override_font_sizes/font_size = 26
 text = "BGM音量"
 
-[node name="BgmVolumeSlider" type="HSlider" parent="CenterContainer/VBoxContainer/BgmVolumeRow"]
+[node name="BgmVolumeSlider" type="HSlider" parent="CenterContainer/VBoxContainer/BgmVolumeRow" unique_id=1239637882]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 size_flags_vertical = 4
-min_value = 0.0
-max_value = 100.0
-step = 1.0
 value = 60.0
 
-[node name="BgmVolumeValueLabel" type="Label" parent="CenterContainer/VBoxContainer/BgmVolumeRow"]
+[node name="BgmVolumeValueLabel" type="Label" parent="CenterContainer/VBoxContainer/BgmVolumeRow" unique_id=116044243]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.357, 0.294, 0.416, 1)
 theme_override_font_sizes/font_size = 26
 text = "60%"
 
-[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1192906623]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "タイトルへ戻る"

@@ -18,9 +18,11 @@ func _ready() -> void:
 	add_to_group("player")
 	if GameState.hidden_mode:
 		$Sprite2D.texture = HIDDEN_TEXTURE
-		_fly_buzz_sound.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		var buzz_stream: AudioStreamWAV = _fly_buzz_sound.duplicate()
+		buzz_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		buzz_stream.loop_end = int(buzz_stream.get_length() * buzz_stream.mix_rate)
 		_buzz_player = AudioStreamPlayer.new()
-		_buzz_player.stream = _fly_buzz_sound
+		_buzz_player.stream = buzz_stream
 		_buzz_player.bus = GameState.SFX_BUS_NAME
 		add_child(_buzz_player)
 	$TargetMarker.visible = false
